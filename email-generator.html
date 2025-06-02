@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Earthbound Travel Co. Email Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Center content and set page background */
+    body {
+      font-family: "Trebuchet MS", sans-serif;
+      background: rgb(238,221,184);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+    /* Constrain container width */
+    #container {
+      max-width: 700px;
+      width: 100%;
+    }
+    h1 {
+      color: #e76f51;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+    fieldset {
+      border: none;
+      margin-bottom: 10px;
+      position: relative;
+      padding: 0;
+    }
+    legend {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #0a4c5a;
+    }
+    .section-checkbox {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin-top: 3px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+    /* Full-span sections */
+    .full-span .form-grid {
+      grid-template-columns: 1fr;
+    }
+    .form-grid label {
+      margin-top: 8px;
+      display: block;
+    }
+    .form-grid input,
+    .form-grid textarea,
+    .form-grid select {
+      width: 100%;
+      padding: 6px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .full-span textarea {
+      /* Make full-span textareas taller */
+      min-height: 80px;
+    }
+    .row-group {
+      display: flex;
+      gap: 10px;
+    }
+    .row-group > div {
+      flex: 1;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 16px;
+      background: #0a4c5a;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-block;
+      margin: 0 5px;
+    }
+    button:hover {
+      background: #083e48;
+    }
+    #output {
+      margin: 20px auto 0;
+      max-width: 600px;
+      width: 100%;
+      background: white;
+      color: #000;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    hr.section-divider {
+      border: 1px solid #ccc;
+      margin: 20px 0;
+    }
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .row-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Earthbound Travel Co. Email Generator</h1>
+
+    <form id="emailForm">
+      <fieldset>
+        <legend>Client Details</legend>
+        <div class="form-grid">
+          <div>
+            <label>Client Name:</label>
+            <input type="text" id="clientName" required />
+          </div>
+          <div>
+            <label>Email Type:</label>
+            <select id="emailType">
+              <option value="itinerary">Itinerary</option>
+              <option value="postTrip">Post-Trip Follow-Up</option>
+              <option value="duringTrip">During-Trip Check-In</option>
+              <option value="quote">Trip Quote</option>
+              <option value="thankYou">Booking Thank You</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid" style="margin-top:10px;">
+          <div>
+            <label>Number of Travellers:</label>
+            <select id="numTravellers">
+              <!-- Options 1 through 30 -->
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+              <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+              <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
+              <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
+              <option>21</option><option>22</option><option>23</option><option>24</option><option>25</option>
+              <option>26</option><option>27</option><option>28</option><option>29</option><option>30</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+      <hr class="section-divider" />
+
+      <!-- Outbound Flight Section -->
+      <fieldset>
+        <legend>Outbound Flight</legend>
+        <div class="section-checkbox">
+          <label><input type="checkbox" id="excludeOutbound" /> Do not include</label>
+        </div>
+        <div class="form-grid">
+          <div>
+            <label>Carrier Name:</label>
+            <input list="carriers" id="outboundCarrier" placeholder="Start typing..." />
+            <label>Flight Number:</label>
+            <input type="text" id="outboundFlightNumber" />
+            <label>Departure Time:</label>
+            <input type="time" id="outboundDepartureTime" />
+            <label>Arrival Time:</label>
+            <input type="time" id="outboundArrivalTime" />
+          </div>
+          <div>
+            <label>From Airport:</label>
+            <input list="airports" id="outboundFromAirport" placeholder="Start typing..." />
+            <label>To Airport:</label>
+            <input list="airports" id="outboundToAirport" placeholder="Start typing..." />
+            <label>Booking Class:</label>
+            <select id="outboundBookingClass">
+              <option>Economy</option><option>Premium Economy</option><option>Business</option><option>First</option>
+            </select>
+          </div>
+        </div>
+        <div class="full-span" style="margin-top:10px;">
+          <label>Notes:</label>
+          <textarea id="outboundNotes" placeholder="Add any notes..." rows="4"></textarea>
+        </div>
+      </fieldset>
+      <hr class="section-divider" />
+
+      <!-- Inbound Flight Section -->
+      <fieldset>
+        <legend>Inbound Flight</legend>
+        <div class="section-checkbox">
+          <label><input type="checkbox" id="excludeInbound" /> Do not include</label>
+        </div>
+        <div class="form-grid">
+          <div>
+            <label>Carrier Name:</label>
+            <input list="carriers" id="inboundCarrier" placeholder="Start typing..." />
+            <label>Flight Number:</label>
+            <input type="text" id="inboundFlightNumber" />
+            <label>Departure Time:</label>
+            <input type="time" id="inboundDepartureTime" />
+            <label>Arrival Time:</label>
+            <input type="time" id="inboundArrivalTime" />
+          </div>
+          <div>
+            <label>From Airport:</label>
+            <input list="airports" id="inboundFromAirport" placeholder="Start typing..." />
+            <label>To Airport:</label>
+            <input list="airports" id="inboundToAirport" placeholder="Start typing..." />
+            <label>Booking Class:</label>
+            <select id="inboundBookingClass">
+              <option>Economy</option><option>Premium Economy</option><option>Business</option><option>First</option>
+            </select>
+          </div>
+        </div>
+        <div class="full-span" style="margin-top:10px;">
+          <label>Notes:</label>
+          <textarea id="inboundNotes" placeholder="Add any notes..." rows="4"></textarea>
+        </div>
+      </fieldset>
+      <hr class="section-divider" />
+
+      <fieldset>
+        <legend>Hotel Details</legend>
+        <div class="section-checkbox">
+          <label><input type="checkbox" id="excludeHotel" /> Do not include</label>
+        </div>
+        <div class="form-grid">
+          <div>
+            <label>Hotel Name:</label>
+            <input type="text" id="hotelName" />
+            <label>Hotel Address:</label>
+            <input type="text" id="hotelAddress" />
+            <label>Hotel Website Link:</label>
+            <input type="url" id="hotelLink" />
+          </div>
+          <div>
+            <label>Check-in Date:</label>
+            <input type="date" id="checkinDate" />
+            <label>Check-out Date:</label>
+            <input type="date" id="checkoutDate" onchange="calculateNights()" />
+            <label>Length of Stay (nights):</label>
+            <input type="text" id="nights" readonly />
+            <div class="row-group">
+              <div>
+                <label>Check-in Time:</label>
+                <input type="text" id="checkin" />
+              </div>
+              <div>
+                <label>Check-out Time:</label>
+                <input type="text" id="checkout" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="full-span" style="margin-top:10px;">
+          <label>Notes:</label>
+          <textarea id="hotelNotes" placeholder="Add any notes..." rows="4"></textarea>
+        </div>
+      </fieldset>
+      <hr class="section-divider" />
+
+      <fieldset class="full-span">
+        <legend>Tour Details</legend>
+        <div class="section-checkbox">
+          <label><input type="checkbox" id="excludeTour" /> Do not include</label>
+        </div>
+        <div class="form-grid">
+          <div>
+            <label>Tour Details:</label>
+            <textarea id="tourDetails" rows="4" placeholder="Add any tour details..."></textarea>
+          </div>
+        </div>
+      </fieldset>
+      <hr class="section-divider" />
+
+      <fieldset class="full-span">
+        <legend>Travel Insurance</legend>
+        <div class="section-checkbox">
+          <label><input type="checkbox" id="excludeInsurance" /> Do not include</label>
+        </div>
+        <div class="form-grid">
+          <div>
+            <label>Travel Insurance Info:</label>
+            <textarea id="insuranceDetails" rows="4" placeholder="Add insurance info..."></textarea>
+          </div>
+        </div>
+      </fieldset>
+      <hr class="section-divider" />
+
+      <button type="button" onclick="generateEmail()">Generate Preview</button>
+      <button type="button" onclick="copyToClipboard()">Copy HTML to clipboard</button>
+      <button type="button" onclick="downloadHTML()">Download as .html</button>
+    </form>
+
+    <div id="output"></div>
+  </div>
+
+  <datalist id="carriers"></datalist>
+  <datalist id="airports"></datalist>
+
+  <!-- Make sure airlines.js and airports.js still sit alongside this HTML file -->
+  <script src="airlines.js"></script>
+  <script src="airports.js"></script>
+  <script>
+    // Mapping of airline names → their 2-letter codes
+    const airlineCodes = {
+      "Air Canada": "AC",
+      "American Airlines": "AA",
+      "Delta Air Lines": "DL",
+      "United Airlines": "UA",
+      "Lufthansa": "LH",
+      "British Airways": "BA",
+      "Emirates": "EK",
+      "Qatar Airways": "QR",
+      "Singapore Airlines": "SQ",
+      "Turkish Airlines": "TK",
+      "Etihad Airways": "EY",
+      "Air France": "AF",
+      "KLM Royal Dutch Airlines": "KL",
+      "Qantas": "QF",
+      "Alaska Airlines": "AS",
+      "Southwest Airlines": "WN",
+      "JetBlue Airways": "B6",
+      "Air India": "AI",
+      "Japan Airlines": "JL",
+      "ANA (All Nippon Airways)": "NH",
+      "Cathay Pacific": "CX"
+    };
+
+    function populateLists() {
+      // Populate carriers datalist
+      const carriers = document.getElementById("carriers");
+      carriers.innerHTML = "";
+      if (typeof airlineList !== 'undefined') {
+        airlineList.forEach((airline) => {
+          const opt = document.createElement("option");
+          opt.value = airline;
+          carriers.appendChild(opt);
+        });
+      }
+
+      // Populate airports datalist
+      const airports = document.getElementById("airports");
+      airports.innerHTML = "";
+      if (typeof airportList !== 'undefined') {
+        airportList.forEach((airport) => {
+          const opt = document.createElement("option");
+          opt.value = airport;
+          airports.appendChild(opt);
+        });
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      populateLists();
+      // Prefix airline codes when selecting carrier
+      ["outboundCarrier", "inboundCarrier"].forEach(id => {
+        ['input','change'].forEach(evt => {
+          document.getElementById(id).addEventListener(evt, (e) => {
+            const name = e.target.value;
+            const code = airlineCodes[name] || "";
+            const flightInputId = id === "outboundCarrier" ? "outboundFlightNumber" : "inboundFlightNumber";
+            const flightInput = document.getElementById(flightInputId);
+            if (code && !flightInput.value.startsWith(code)) {
+              flightInput.value = code;
+            }
+          });
+        });
+      });
+    });
+
+    function calculateNights() {
+      const checkinDate = new Date(
+        document.getElementById("checkinDate").value
+      );
+      const checkoutDate = new Date(
+        document.getElementById("checkoutDate").value
+      );
+      if (checkoutDate > checkinDate) {
+        const timeDiff = checkoutDate - checkinDate;
+        const nights = Math.round(timeDiff / (1000 * 60 * 60 * 24));
+        document.getElementById("nights").value = nights;
+      } else {
+        document.getElementById("nights").value = "";
+      }
+    }
+
+    function generateEmail() {
+      const type = document.getElementById("emailType").value;
+      const name = document.getElementById("clientName").value;
+      const numTravellers = document.getElementById("numTravellers").value;
+
+      // Outbound flight fields
+      const outCarrier = document.getElementById("outboundCarrier").value;
+      const outFlightNumber = document.getElementById("outboundFlightNumber").value;
+      const outDepTime = document.getElementById("outboundDepartureTime").value;
+      const outArrTime = document.getElementById("outboundArrivalTime").value;
+      const outFrom = document.getElementById("outboundFromAirport").value;
+      const outTo = document.getElementById("outboundToAirport").value;
+      const outClass = document.getElementById("outboundBookingClass").value;
+      const outNotes = document.getElementById("outboundNotes").value;
+      const excludeOut = document.getElementById("excludeOutbound").checked;
+
+      // Inbound flight fields
+      const inCarrier = document.getElementById("inboundCarrier").value;
+      const inFlightNumber = document.getElementById("inboundFlightNumber").value;
+      const inDepTime = document.getElementById("inboundDepartureTime").value;
+      const inArrTime = document.getElementById("inboundArrivalTime").value;
+      const inFrom = document.getElementById("inboundFromAirport").value;
+      const inTo = document.getElementById("inboundToAirport").value;
+      const inClass = document.getElementById("inboundBookingClass").value;
+      const inNotes = document.getElementById("inboundNotes").value;
+      const excludeIn = document.getElementById("excludeInbound").checked;
+
+      // Hotel details
+      const hotel = document.getElementById("hotelName").value;
+      const hotelAddress = document.getElementById("hotelAddress").value;
+      const hotelLink = document.getElementById("hotelLink").value;
+      const hotelNotes = document.getElementById("hotelNotes").value;
+      const checkinDate = document.getElementById("checkinDate").value;
+      const checkoutDate = document.getElementById("checkoutDate").value;
+      const checkinTime = document.getElementById("checkin").value;
+      const checkoutTime = document.getElementById("checkout").value;
+      const nights = document.getElementById("nights").value;
+
+      // Tour & insurance details
+      const tourDetails = document.getElementById("tourDetails").value;
+      const insurance = document.getElementById("insuranceDetails").value;
+
+      // Exclusion checkboxes
+      const excludeHotel = document.getElementById("excludeHotel").checked;
+      const excludeTour = document.getElementById("excludeTour").checked;
+      const excludeInsurance = document.getElementById("excludeInsurance").checked;
+
+      // Build summary sections
+      let summarySections = "";
+      if (type === "itinerary") {
+        summarySections += `<p>Number of Travellers: ${numTravellers}</p>`;
+        if (!excludeOut && outCarrier) {
+          summarySections += `<h2 style='color:#0A4C5A;font-size:20px;margin-top:20px;'>✈️ Outbound Flight</h2>`;
+          summarySections += `<p style='margin:0;'>${outCarrier} ${outFlightNumber} - ${outFrom} → ${outTo} - ${outDepTime} → ${outArrTime} - ${outClass}</p>`;
+          if (outNotes.trim()) summarySections += `<p style='margin:0;'>Notes: ${outNotes}</p>`;
+        }
+        if (!excludeIn && inCarrier) {
+          summarySections += `<h2 style='color:#0A4C5A;font-size:20px;margin-top:20px;'>✈️ Inbound Flight</h2>`;
+          summarySections += `<p style='margin:0;'>${inCarrier} ${inFlightNumber} - ${inFrom} → ${inTo} - ${inDepTime} → ${inArrTime} - ${inClass}</p>`;
+          if (inNotes.trim()) summarySections += `<p style='margin:0;'>Notes: ${inNotes}</p>`;
+        }
+        if (!excludeHotel && hotel) {
+          summarySections += `<h2 style='color:#0A4C5A;font-size:20px;margin-top:20px;'>🏨 Hotel Details</h2>`;
+          summarySections += `<p style='margin:0;'><b>${hotel}</b><br>${hotelAddress}<br>`;
+          if (hotelLink) summarySections += `<a href='${hotelLink}' style='color:#E76F51;text-decoration:none;'>Hotel Website</a><br>`;
+          summarySections += `Check-in: ${checkinDate} at ${checkinTime}<br>Check-out: ${checkoutDate} at ${checkoutTime}<br>${nights} nights</p>`;
+          if (hotelNotes.trim()) summarySections += `<p style='margin:0;'>Notes: ${hotelNotes}</p>`;
+        }
+        if (!excludeTour && tourDetails.trim()) summarySections += `<h2 style='color:#0A4C5A;font-size:20px;margin-top:20px;'>🎟️ Tours & Activities</h2><p style='margin:0;'>${tourDetails}</p>`;
+        if (!excludeInsurance && insurance.trim()) summarySections += `<h2 style='color:#0A4C5A;font-size:20px;margin-top:20px;'>🛡️ Travel Insurance</h2><p style='margin:0;'>${insurance}</p>`;
+      }
+
+      // Build greeting based on type
+      let greeting = "";
+      if (type === "quote") {
+        greeting = `<p style='margin:0;'>Hi ${name},<br>Here's a personalized quote for your upcoming trip, curated by Earthbound Travel Co.</p>`;
+      } else if (type === "thankYou") {
+        greeting = `<p style='margin:0;'>Hi ${name},<br>Thank you for booking with <b>Earthbound Travel Co.</b> — you're all set for a fantastic experience!</p>`;
+      } else {
+        greeting = `<p style='margin:0;'>Hi ${name},</p><p style='margin:0;'>Thank you for booking your adventure with <b>Earthbound Travel Co.</b></p>`;
+      }
+
+      // Combine everything into final email HTML
+      const emailHTML = `
+        <div style="background: rgb(238,221,184); padding: 20px;">
+          <div style="max-width:600px; margin: auto; background:#ffffff; padding:20px; border-radius:10px; font-family:'Trebuchet MS',sans-serif;">
+            <!-- Banner -->
+            <div style="position: relative; max-width: 600px; margin: auto;">
+              <div id="emailBannerText" style="
+                background-color: rgb(17,73,80);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 20px;
+                border-radius: 10px 10px 0 0;
+                box-sizing: border-box;
+              ">
+                <div style="color:#f3e8d0; font-size: clamp(16px, 3vw, 26px); font-family:'Trebuchet MS',sans-serif; font-weight:500; margin:0;">
+                  Your travel blueprint has arrived!
+                </div>
+                <img src="https://framerusercontent.com/images/OzRGMmfLnWHEecqWWbUw8JOH0.png" alt="Earthbound Travel Co. Logo" style="max-height: 120px; width: auto;"/>
+              </div>
+            </div>
+
+            <!-- Greeting & Summary -->
+            ${greeting}
+            ${summarySections}
+
+            <!-- Signature -->
+            <p style="margin-top:20px; margin-bottom:0; text-align:left;">Warm regards,</p>
+            <p style="margin:0; text-align:left;"><strong>Sheroy Mistry</strong></p>
+            <p style="margin:0; text-align:left;">Travel Advisor | Earthbound Travel Co.</p>
+            <p style="margin:0; text-align:left;">
+              🌐 <a href="https://earthbound.travel" style="color:#E76F51;text-decoration:none;">earthbound.travel</a><br>
+              📧 <a href="mailto:bookings@earthbound.travel" style="color:#E76F51;text-decoration:none;">bookings@earthbound.travel</a><br>
+              📷 <a href="https://instagram.com/earthbound.travel.co" style="color:#E76F51;text-decoration:none;">@earthbound.travel.co</a>
+            </p>
+          </div>
+        </div>`;
+
+      // Show live preview in the output container
+      document.getElementById("output").innerHTML = emailHTML;
+
+      // Update banner text based on type
+      const bannerText = {
+        itinerary: "Your travel blueprint has arrived!",
+        quote: "Your personalized quote is ready!",
+        thankYou: "Thank you for booking with us!",
+        duringTrip: "Hope your journey is going smoothly!",
+        postTrip: "We hope you had an amazing time!",
+      }[type] || "Your trip details await!";
+      const banner = document.querySelector("#output #emailBannerText > div");
+      if (banner) banner.innerText = bannerText;
+    }
+
+    function copyToClipboard() {
+      const html = document.getElementById("output").innerHTML;
+      navigator.clipboard.writeText(html).then(() => {
+        alert("Email HTML copied to clipboard.");
+      });
+    }
+
+    function downloadHTML() {
+      const content = document.getElementById("output").innerHTML;
+      const blob = new Blob([content], { type: "text/html" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "earthbound_email.html";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
