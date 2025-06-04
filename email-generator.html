@@ -141,10 +141,10 @@
           <div>
             <label>Email Type:</label>
             <select id="emailType">
-              <option value="itinerary">Itinerary</option>
-              <option value="postTrip">Post-Trip Follow-Up</option>
-              <option value="duringTrip">During-Trip Check-In</option>
               <option value="quote">Trip Quote</option>
+              <option value="itinerary">Itinerary</option>
+              <option value="duringTrip">During-Trip Check-In</option>
+              <option value="postTrip">Post-Trip Follow-Up</option>
               <option value="thankYou">Booking Thank You</option>
             </select>
           </div>
@@ -477,11 +477,11 @@
       // Build greeting based on type
       let greeting = "";
       if (type === "quote") {
-        greeting = `<p style='margin:0;'>Hi ${name},<br>Here's a personalized quote for your upcoming trip, curated by Earthbound Travel Co.</p>`;
+        greeting = `<p style='margin:0;'><br>Hi ${name},<br>Here's a personalized quote for your upcoming trip, curated by Earthbound Travel Co.</p>`;
       } else if (type === "thankYou") {
-        greeting = `<p style='margin:0;'>Hi ${name},<br>Thank you for booking with <b>Earthbound Travel Co.</b> — you're all set for a fantastic experience!</p>`;
+        greeting = `<p style='margin:0;'><br>Hi ${name},<br>Thank you for booking with <b>Earthbound Travel Co.</b> — you're all set for a fantastic experience!</p>`;
       } else {
-        greeting = `<p style='margin:0;'>Hi ${name},</p><p style='margin:0;'>Thank you for booking your adventure with <b>Earthbound Travel Co.</b></p>`;
+        greeting = `<p style='margin:0;'><br>Hi ${name},</p><p style='margin:0;'>Thank you for booking your adventure with <b>Earthbound Travel Co.</b></p>`;
       }
 
       // Combine everything into final email HTML
